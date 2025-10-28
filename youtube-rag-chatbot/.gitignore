@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.env
+.env.*
+.venv/
+venv/
+# FAISS data or vectorstore
+backend/app/vector_store/
+# Node
+node_modules/
+dist/
+# Docker
+*.log
