@@ -1,4 +1,4 @@
-# Python
+# Python 
 __pycache__/
 *.pyc
 .env
@@ -12,3 +12,10 @@ node_modules/
 dist/
 # Docker
 *.log
+# VS Code and Visual Studio files
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
