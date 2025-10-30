@@ -31,5 +31,8 @@ youtube-transcript-api
 
 # vector stores
 faiss-cpu   
-
 tiktoken 
+
+# fast api
+fastapi
+uvicorn
