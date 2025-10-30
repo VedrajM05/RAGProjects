@@ -15,7 +15,7 @@ def health_check():
 
 
 
-# WITHOUT ROUTERS (all in main.py)
+# WITHOUT ROUTERS (all in main.py) 
     # @app.get("/health")
     # @app.get("/transcript/{id}")
     # @app.post("/chat")
