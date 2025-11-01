@@ -4,6 +4,7 @@ from app.core.config import config
 from app.models.youtube_models import ProcessVideoRequest, ProcessVideoResponse, VideoStatus
 # from app.models.query_models import AskRequest,AskResponse, SourceModel
 from app.services.fetch_transcript import fetch_video_id_from_url, fetch_transcript_from_video, extract_video_id_from_playlist, get_text_from_raw_transcript
+from app.utils.file_utils import save_transcript
 
 router = APIRouter(tags=["process_video"])
 
@@ -22,6 +23,9 @@ def process_video(request : ProcessVideoRequest):
                 status= VideoStatus.FAILED,
                 message="Could not extract transcript from video"
             )
+        
+        # Save transcript
+        transcript_path = save_transcript(video_id, final_transcript)
 
         return ProcessVideoResponse(
                 video_id= video_id,
