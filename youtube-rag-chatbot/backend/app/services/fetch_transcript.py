@@ -125,8 +125,8 @@ def get_text_from_raw_transcript(raw_transcript : list[dict]) -> str:
     return full_text 
 
 
-videoId = fetch_video_id_from_url(video_url)
-if videoId:
-    raw_transcript = fetch_transcript_from_video(videoId)
-    if raw_transcript:
-        final_transcript = get_text_from_raw_transcript(raw_transcript)
+# videoId = fetch_video_id_from_url(video_url)
+# if videoId:
+#     raw_transcript = fetch_transcript_from_video(videoId)
+#     if raw_transcript:
+#         final_transcript = get_text_from_raw_transcript(raw_transcript)

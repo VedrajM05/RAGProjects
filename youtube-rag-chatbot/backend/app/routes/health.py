@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 import datetime
 from app.core.config import config
+from app.models.youtube_models import ProcessVideoRequest, ProcessVideoResponse
+from app.models.query_models import AskRequest,AskResponse, SourceModel
 
 router = APIRouter(tags=["health"])
 

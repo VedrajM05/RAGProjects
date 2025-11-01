@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import datetime
 from app.core.config import config
-from app.routes import health
+from app.routes import health, process_video
 
 app = FastAPI(
     title = config.APP_NAME,
@@ -11,11 +11,8 @@ app = FastAPI(
 # Wire the health router into the main app
 app.include_router(health.router)
 
-
-@app.get("/")
-def root():
-    return{"message" : "Welcome to Youtube RAG Chatbot"}
-
+# Wire the process_video into the main app
+app.include_router(process_video.router)
 
 
 # Run from here
