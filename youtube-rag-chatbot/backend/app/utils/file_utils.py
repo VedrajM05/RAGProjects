@@ -1,7 +1,5 @@
 import json
-import os
 from pathlib import Path
-from typing import Any, Dict, Optional
 
 
 def ensure_video_directory(video_id : str) -> Path:
@@ -49,3 +47,18 @@ def save_transcript(video_id : str, final_transcript : str)-> str:
 
     print(f"Transcript saved to {transcript_path}")
     return str(transcript_path)
+
+
+
+def transcript_exists(video_id : str) -> bool:
+    """
+    Check if a transcript exists for a video based on video id
+    
+    Args:
+        video_id: YouTube video ID
+        
+    Returns:
+        True/False indicating if transcript exists or not
+    """
+    transcript_path = Path("app/data") / video_id / "transcript.json"
+    return transcript_path.exists()

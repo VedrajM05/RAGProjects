@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-import datetime
 from app.core.config import config
-from app.routes import health, process_video
+from app.routes import health, process_video, ask_question
 
 app = FastAPI(
     title = config.APP_NAME,
@@ -13,6 +12,9 @@ app.include_router(health.router)
 
 # Wire the process_video into the main app
 app.include_router(process_video.router)
+
+# Wire the ask question  into the main app
+app.include_router(ask_question.router)
 
 
 # Run from here
