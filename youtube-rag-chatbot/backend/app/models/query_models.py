@@ -12,8 +12,8 @@ class SourceModel(BaseModel):
 
 class AskRequest(BaseModel):
     """Request model for asking questions about the youtube video"""
-    video_id : str = Field(..., min_length=1, description="Youtube video id", examples="video123")
-    question : str = Field(..., min_length=1, description="Question to ask about the video", examples="What is this video about?")
+    video_id : str = Field(..., min_length=1, description="Youtube video id")
+    question : str = Field(..., min_length=1, description="Question to ask about the video")
 
 class AskResponse(BaseModel):
     """Response model for question answers with sources"""

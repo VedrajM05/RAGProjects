@@ -4,9 +4,9 @@ start_word = "?v="
 end_word = "&list="
 
 # video_url = "https://www.youtube.com/watch?v=pSVk-5WemQ0&list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0"
-video_url = "https://www.youtube.com/watch?v=IIvORO248Zs"
+# video_url = "https://www.youtube.com/watch?v=IIvORO248Zs"
 # video_url = "https://www.youtube.com/watch?v=2GV_ouHBw30&list=PLKnIA16_RmvbYFaaeLY28cWeqV-3vADST&index=1&t=597s"
-
+video_url = ""
 #======================================fetch_video_id_from_url======================================
 def fetch_video_id_from_url(video_url : str) -> str:
     """

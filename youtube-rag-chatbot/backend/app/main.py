@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.core.config import config
-from app.routes import health, process_video, ask_question
+from app.routes import health, process_video
+from app.routes import ask_question
 
 app = FastAPI(
     title = config.APP_NAME,

@@ -7,7 +7,7 @@ from app.services.rag_service import answer_question
 router = APIRouter(tags=["ask_question"])
 
 @router.post("/ask_question", response_model=AskResponse)
-def ask_question(ask_question : AskRequest):
+def ask_question(user_question : AskRequest):
     """
     Asks question about processed youtube video
     
@@ -20,14 +20,14 @@ def ask_question(ask_question : AskRequest):
 
     """
     # Validate that the video has been processed
-    if  not transcript_exists(ask_question.video_id) :
+    if  not transcript_exists(user_question.video_id) :
         raise HTTPException(
             status_code= 404,
-            detail=f"Video Id : '{ask_question.video_id}' not found. Please process the video first and then ask questions"
+            detail=f"Video Id : '{user_question.video_id}' not found. Please process the video first and then ask questions"
         )
     
     try:
-        response = answer_question(ask_question.video_id, ask_question.question)
+        response = answer_question(user_question.video_id, user_question.question)
         return response
     
     except Exception as e:
