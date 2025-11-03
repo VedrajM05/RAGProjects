@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from app.core.config import config
 
 
 def ensure_video_directory(video_id : str) -> Path:
@@ -12,7 +13,7 @@ def ensure_video_directory(video_id : str) -> Path:
     Returns:
         Path to the video directory
     """
-    video_directory = Path("app/data") / video_id
+    video_directory = Path(config.data_folder) / video_id
 
     #Create directory and parent if it doesnt exist
     video_directory.mkdir(parents=True)
@@ -34,7 +35,7 @@ def save_transcript(video_id : str, final_transcript : str)-> str:
     video_dir = ensure_video_directory(video_id)
 
     # Define transcript file path
-    transcript_path = video_dir/"transcript.json"
+    transcript_path = video_dir/config.transcript_dot_json
 
     # Save transcript as json
     transcript_data = {
@@ -60,5 +61,30 @@ def transcript_exists(video_id : str) -> bool:
     Returns:
         True/False indicating if transcript exists or not
     """
-    transcript_path = Path("app/data") / video_id / "transcript.json"
+    transcript_path = Path(config.data_folder) / video_id / config.transcript_dot_json
     return transcript_path.exists()
+
+def load_transcript_text(video_id : str) -> str:
+    """
+    Load transcript text from backend/app/data/<video_id>/transcript.json
+    
+    Args:
+        video_id: YouTube video ID
+        
+    Returns:
+        Transcript text as string or empty string if not found
+    """
+    transcript_path = Path(config.data_folder) / video_id / config.transcript_dot_json
+    print(transcript_path)
+    if not transcript_path.exists():
+        print("transcript path not found")
+        return ""
+    
+    try:
+        with open(transcript_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("transcript", "")
+    
+    except (json.JSONDecodeError, IOError) as e:
+        print(f"Error loading transcript for video_id : {video_id} : {e}")
+        return ""

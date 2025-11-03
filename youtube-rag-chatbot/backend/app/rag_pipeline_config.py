@@ -17,8 +17,8 @@ VECTOR_STORE_BASE_DIR = Path("./app/vector_store")
 FAISS_INDEX_NAME = "faiss_index"
 
 # Text Chunking Configuration
-CHUNK_SIZE = 800 # No of characters per chunk
-CHUNK_OVERLAP = 200 # Overlap between 2 consecutive chunks
+CHUNK_SIZE = 100 # No of characters per chunk
+CHUNK_OVERLAP = 20 # Overlap between 2 consecutive chunks
 CHUNK_SEPERATOR = "\n" # Seperator for splitting text
 
 # Retrieval Configuration

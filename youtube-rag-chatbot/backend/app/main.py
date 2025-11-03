@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.core.config import config
 from app.routes import health, process_video
-from app.routes import ask_question
+from app.routes import ask_question, chunk_transcript
 
 app = FastAPI(
     title = config.APP_NAME,
@@ -17,6 +17,8 @@ app.include_router(process_video.router)
 # Wire the ask question  into the main app
 app.include_router(ask_question.router)
 
+# Wire the chunk_transcript  into the main app
+app.include_router(chunk_transcript.router)
 
 # Run from here
 # PS C:\RAGProjects\youtube-rag-chatbot\backend> uvicorn app.main:app --reload --port 8000

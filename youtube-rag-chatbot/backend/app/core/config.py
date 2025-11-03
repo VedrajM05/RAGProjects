@@ -9,6 +9,10 @@ class Config:
     #API Keys
     hf_api_keys = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
+    #Transcript variables
+    data_folder = "app/data"
+    transcript_dot_json = "transcript.json"
+
 
 # Global config instance
 config = Config()
