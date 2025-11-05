@@ -1,8 +1,9 @@
 """
 Embedding Service for creating embeddings and building FAISS index
 """
+import json
 import faiss
-from app.rag_pipeline_config import EMBEDDING_MODEL
+from app.rag_pipeline_config import EMBEDDING_MODEL, get_faiss_directory
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
@@ -101,3 +102,35 @@ def search_similar_embedding(index, query_embedding : np.ndarray, top_k : int = 
     return distances[0], indices[0]
 
 
+def persist_index(index, chunks : list[dict], video_id : str) -> str :
+    """
+    Save FAISS index and metadata to disc
+    """
+    
+    #Create directory to save FAISS index
+    index_dir = get_faiss_directory(video_id)
+    index_dir.mkdir(parents=True, exist_ok=True)
+
+    # Save FAISS index
+    index_path = index_dir / "faiss_index"
+    faiss.write_index(index, str(index_path))
+
+    # Save metadata
+    # The metadata.json file stores the connection between embeddings and original text chunks.
+    # FAISS index only stores numbers (vectors), but we need to know what text those numbers represent.
+    # metadata.json is the lookup table that connects vector indices back to human-readable text
+    metadata = []
+    for i, chunk in enumerate(chunks):
+        metadata.append({
+            "chunk_id" : chunk['id'],
+            "chunk_index" : i,
+            "text" : chunk['text'],
+            "meta" : chunk.get('meta', {}),
+        })
+    metadata_path = index_dir / "metadata.json"
+    with open(metadata_path, 'w', encoding='utf-8') as f :
+        json.dump(metadata, f, indent=2, ensure_ascii = False)
+
+    print(f"Persisted index to {index_dir}")
+
+    return index_path
