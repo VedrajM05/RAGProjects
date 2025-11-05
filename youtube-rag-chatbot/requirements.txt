@@ -8,6 +8,9 @@ langchain-text-splitters
 langchain-openai
 openai
 
+# LLM
+sentence-transformers
+
 # Anthropic Integration
 langchain-anthropic
 
