@@ -26,7 +26,9 @@ TOP_K = 3 # No of relevant chunks to retrieve per query
 SEARCH_TYPE = "similarity" # Options : similarity, MMR, MQR
 
 # LLM Configuration
-LLM_MODEL_NAME = "meta-llama/Llama-3.1-8B-Instruct"
+LLM_MODEL_NAME1 = "meta-llama/Llama-3.1-8B-Instruct"
+LLM_MODEL_NAME2 = "mistralai/Mistral-7B-Instruct-v0.1"
+
 
 
 def get_faiss_directory(video_id : str) -> Path :

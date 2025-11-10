@@ -2,6 +2,13 @@
 Response Service for generating answers using LLM
 """
 
+import os
+from app.services.retriever_service import get_retriever
+from app.rag_pipeline_config import LLM_MODEL_NAME1, LLM_MODEL_NAME2
+from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
+from dotenv import load_dotenv
+
+
 class ResponseService():
     def __init__(self):
         # Initialize retriever, embeddings, model pipeline
@@ -11,23 +18,48 @@ class ResponseService():
     def build_context(self, video_id : str, query : str, top_k : int = 3)-> list[dict]:
         """
         Retrieve top relevant chunks for the query
+        
         Input: Video ID, user query
         Output: List of top chunks with metadata
         """
 
         # Connect to retriever, get most relevant segments
-        pass
+        retriever = get_retriever(video_id)
+        chunks = retriever.retrieve(query, top_k=3)
+        return chunks
 
 
     def build_prompt(self, context_chunks : list[dict], query : str)-> str:
         """
         Build prompt using template and context
+
         Input: Context chunks + user query  
         Output: Formatted prompt string
         """
+        #Read prompt template file
+        template_path = 'docs/prompts/video_rag_prompt.md'
 
-        # Fill {context} and {query} placeholder from markdown template  
-        pass
+        if os.path.exists(template_path):
+            with open(template_path, 'r', encoding='utf-8') as f:
+                template = f.read()
+        else : 
+            raise FileNotFoundError(f"Could not find prompt template file at path : {template_path}")
+        
+
+        # Format chunks : add numbering
+        formatted_chunks = []
+        for i,chunk in enumerate(context_chunks):
+            formatted_chunks.append(f"Chunk {i + 1} : {chunk['text']}")
+
+        
+        context_text = "\n\n".join(formatted_chunks)
+        
+        # Fill {context} and {query} placeholder from markdown template
+        prompt = template.replace("{context_chunks}", context_text)
+        prompt = prompt.replace("{user_question}", query)
+
+        # Return formatted prompt 
+        return prompt
 
 
     def generate_llm_response(self, prompt : str)-> str:
@@ -38,8 +70,26 @@ class ResponseService():
         Output: LLM response text
         """
 
-        # Invoke model and retreive output  
-        pass
+        # Load environment variables from .env file
+        load_dotenv()
+
+        HF_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+        if not HF_API_TOKEN : 
+            return f"HF_API_TOKEN not found in env variables"
+        
+        try:
+            llm = HuggingFaceEndpoint(
+                repo_id=LLM_MODEL_NAME1,
+                huggingfacehub_api_token=HF_API_TOKEN,
+                task= "text/generation",
+                temperature=0.1
+            )
+            # Invoke model and retreive output  
+            response = llm.invoke(prompt)
+            return response.content if hasattr(response, 'content') else str(response)
+        
+        except Exception as e:
+            return f"Exception : Error calling LLM {str(e)}"
 
 
     def format_response(self, llm_output : str, context_chunks : list[dict])-> dict:
