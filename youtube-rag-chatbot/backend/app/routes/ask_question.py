@@ -31,7 +31,9 @@ def ask_question(user_question : AskRequest):
         # response = answer_question(user_question.video_id, user_question.question)
         # return response
         result = response_service.build_context(user_question.video_id, user_question.question, top_k=3)
+        print(result)
         prompt = response_service.build_prompt(result, user_question.question)
+        print(prompt)
         llm_response = response_service.generate_llm_response(prompt)
         print(llm_response)
         return llm_response

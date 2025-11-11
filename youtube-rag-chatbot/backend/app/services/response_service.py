@@ -3,9 +3,13 @@ Response Service for generating answers using LLM
 """
 
 import os
+import traceback
+
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage
+from transformers import pipeline
 from app.services.retriever_service import get_retriever
 from app.rag_pipeline_config import LLM_MODEL_NAME1, LLM_MODEL_NAME2
-from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
 from dotenv import load_dotenv
 
 
@@ -69,26 +73,28 @@ class ResponseService():
         Input: Prompt string
         Output: LLM response text
         """
-
+        
         # Load environment variables from .env file
         load_dotenv()
 
-        HF_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-        if not HF_API_TOKEN : 
-            return f"HF_API_TOKEN not found in env variables"
+        API_KEY = os.getenv("OPENAI_API_KEY")
+        if not API_KEY : 
+            return f"API_KEY not found in env variables"
         
+        # Step 1: Create a pipeline : Hugging Face local/internet-accessible model, using the Transformers pipeline interface
         try:
-            llm = HuggingFaceEndpoint(
-                repo_id=LLM_MODEL_NAME1,
-                huggingfacehub_api_token=HF_API_TOKEN,
-                task= "text/generation",
-                temperature=0.1
+            llm = ChatOpenAI(
+                model="gpt-3.5-turbo",
+                temperature=0.2,
+                api_key=API_KEY
             )
-            # Invoke model and retreive output  
-            response = llm.invoke(prompt)
-            return response.content if hasattr(response, 'content') else str(response)
+            # Invoke model and retreive output 
+            response = llm.invoke([HumanMessage(content=prompt)])
+            
+            return response.content
         
         except Exception as e:
+            #traceback.print_exc()
             return f"Exception : Error calling LLM {str(e)}"
 
 

@@ -28,7 +28,8 @@ SEARCH_TYPE = "similarity" # Options : similarity, MMR, MQR
 # LLM Configuration
 LLM_MODEL_NAME1 = "meta-llama/Llama-3.1-8B-Instruct"
 LLM_MODEL_NAME2 = "mistralai/Mistral-7B-Instruct-v0.1"
-
+LLM_MODEL_NAME3 = "mistralai/Mistral-7B-Instruct-v0.2"
+LLM_MODEL_NAME4 = "meta-llama/Llama-2-13b-chat-hf"
 
 
 def get_faiss_directory(video_id : str) -> Path :
