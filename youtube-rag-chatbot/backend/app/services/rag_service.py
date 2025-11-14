@@ -1,4 +1,4 @@
-from app.models.query_models import AskResponse, SourceModel
+from app.models.query_models import AskResponse
 
 
 def answer_question_stub(video_id : str, question : str) -> AskResponse :
@@ -13,24 +13,24 @@ def answer_question_stub(video_id : str, question : str) -> AskResponse :
         AskResponse with answer and sources
     """
     # Canned response create
-    sources = [
-        SourceModel(
-            start=120.5,
-            duration=45.2,
-            text=f"Based on video content, this question discusses topics related to '{question}'.",
-            score=0.95
-        ),
-        SourceModel(
-            start=121.5,
-            duration=41.2,
-            text=f"Based on video content, this is another relevant topic related to '{question}'.",
-            score=0.87
-        )
-    ]
+    # sources = [
+    #     SourceModel(
+    #         start=120.5,
+    #         duration=45.2,
+    #         text=f"Based on video content, this question discusses topics related to '{question}'.",
+    #         score=0.95
+    #     ),
+    #     SourceModel(
+    #         start=121.5,
+    #         duration=41.2,
+    #         text=f"Based on video content, this is another relevant topic related to '{question}'.",
+    #         score=0.87
+    #     )
+    # ]
 
     return AskResponse(
         answer=f"This is a stub response for video id : '{video_id}'. The RAG pipeline will be implemented later",
-        sources=sources
+        #sources=sources
     )
 
 

@@ -8,10 +8,10 @@ import traceback
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from transformers import pipeline
+from app.models.query_models import AskResponse
 from app.services.retriever_service import get_retriever
-from app.rag_pipeline_config import LLM_MODEL_NAME1, LLM_MODEL_NAME2
+from app.rag_pipeline_config import LLM_MODEL_NAME1, LLM_MODEL_NAME2, TOP_K
 from dotenv import load_dotenv
-
 
 class ResponseService():
     def __init__(self):
@@ -19,7 +19,7 @@ class ResponseService():
         pass
 
 
-    def build_context(self, video_id : str, query : str, top_k : int = 3)-> list[dict]:
+    def build_context(self, video_id : str, query : str, top_k : int = TOP_K)-> list[dict]:
         """
         Retrieve top relevant chunks for the query
         
@@ -29,7 +29,7 @@ class ResponseService():
 
         # Connect to retriever, get most relevant segments
         retriever = get_retriever(video_id)
-        chunks = retriever.retrieve(query, top_k=3)
+        chunks = retriever.retrieve(query, top_k= TOP_K)
         return chunks
 
 
@@ -107,7 +107,11 @@ class ResponseService():
         """
 
         # Create {"answer" : ..., "sources" : [...]} format 
-        pass
+        json_output = llm_output.strip()
+        if json_output.lower().startswith("answer:"):
+            json_output = json_output[len("answer:"):].strip()
+
+        return AskResponse(answer=json_output)
 
     def generate_answer(self, video_id: str, query : str)-> dict:
         """

@@ -36,7 +36,9 @@ def ask_question(user_question : AskRequest):
         print(prompt)
         llm_response = response_service.generate_llm_response(prompt)
         print(llm_response)
-        return llm_response
+        json_response = response_service.format_response(llm_response, result)
+        print(json_response)
+        return json_response
     
     except Exception as e:
         raise HTTPException(

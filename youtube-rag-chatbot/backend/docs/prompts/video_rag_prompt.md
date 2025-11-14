@@ -14,6 +14,5 @@ Answer the question using ONLY information from the provided transcript segments
 
 - If the answer can be found in the transcripts, provide a concise answer (2-3 sentences maximum)
 - If the question cannot be answered from the provided transcripts, say: "The video doesn't discuss this topic."
-- Always reference which chunk(s) you used: [Chunk X]
 - Never make up information or speculate beyond the transcripts
 - Keep responses brief and factual

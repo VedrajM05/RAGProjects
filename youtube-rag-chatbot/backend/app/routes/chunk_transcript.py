@@ -4,6 +4,7 @@ from app.utils.file_utils import load_transcript_text
 from app.services.text_splitter_service import split_transcript
 from app.services.embedding_service import create_embeddings, build_faiss_index, search_similar_embedding, persist_index
 from app.services.retriever_service import get_retriever
+from app.rag_pipeline_config import TOP_K
 
 
 router = APIRouter(tags=["chunk_transcript"])
@@ -39,7 +40,7 @@ def chunk_transcript(video_id : str):
         retriever = get_retriever(video_id)
 
         # Retrieve relevant chunks
-        results = retriever.retrieve(query, top_k = 3)
+        results = retriever.retrieve(query, top_k = TOP_K)
 
         print(f"Top similar chunks for query : {query}")
         for result in results:
