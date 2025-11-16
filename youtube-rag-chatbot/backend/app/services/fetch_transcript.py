@@ -121,7 +121,7 @@ def get_text_from_raw_transcript(raw_transcript : list[dict]) -> str:
     
     # Combine all parts with spaces    
     full_text = ' '.join(single_transcript)
-    print(full_text)
+    #print(full_text)
     return full_text 
 
 

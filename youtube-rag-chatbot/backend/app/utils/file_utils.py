@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import shutil
 from app.core.config import config
 
 
@@ -14,10 +15,11 @@ def ensure_video_directory(video_id : str) -> Path:
         Path to the video directory
     """
     video_directory = Path(config.data_folder) / video_id
-
-    #Create directory and parent if it doesnt exist
-    video_directory.mkdir(parents=True)
-
+    
+    #Delete directory if it exists and recreate
+    if not video_directory.exists():
+        video_directory.mkdir(parents=True)
+    
     return video_directory
 
 def save_transcript(video_id : str, final_transcript : str)-> str:

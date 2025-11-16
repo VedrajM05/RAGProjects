@@ -32,7 +32,7 @@ def process_video(request : ProcessVideoRequest):
             )
     except Exception as e:
         return ProcessVideoResponse(
-                video_id=  "unknown",
+                video_id=  video_id,
                 status= VideoStatus.FAILED,
                 message="Transcript extraction failed"
             )

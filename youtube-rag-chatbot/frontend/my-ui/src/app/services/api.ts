@@ -19,7 +19,7 @@ export class Api {
   */
   processVideo(request : ProcessVideRequest) : Observable<ProcessVideoResponse>{
     return this.http.post<ProcessVideoResponse>(
-      `${this.baseUrl}/process-video`, 
+      `${this.baseUrl}/process_video`, 
       request
     );
   }

@@ -1,1 +1,72 @@
-<p>video-processor works!</p>
+<!-- <div class="video-input">
+    <h1>Process Video Input</h1>
+    
+    <input
+        type="text"
+        [value] = "ytURL()"
+        (input) = "ytURL.set($any($event.target).value)"
+        placeholder="Paste Youtube URL here"
+        class="url-input"
+    />
+    <button
+        [disabled] = "isLoading()"
+        (click) = "processVideo()"
+        class="process-btn"
+    >
+    {{isLoading() ? 'Processing' : 'Process Video'}}
+    </button>
+
+    <div class="message">
+        {{message()}}
+    </div>
+
+</div> -->
+
+ <!-- Video Processor Card -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Process YouTube Video</h5>
+      
+      <!-- URL Input -->
+      <div class="mb-3">
+        <label class="form-label">YouTube URL</label>
+        <input 
+          type="text" 
+          class="form-control"
+          [value]="ytURL()" 
+          (input)="ytURL.set($any($event.target).value)"
+          placeholder="Paste YouTube URL here..."
+        />
+      </div>
+
+      <!-- Process Button -->
+      <button 
+        class="btn btn-primary w-100"
+        (click)="processVideo()"
+        [disabled]="isLoading()"
+      >
+        <span *ngIf="isLoading()" class="spinner-border spinner-border-sm me-2"></span>
+        {{ isLoading() ? 'Processing...' : 'Process Video' }}
+      </button>
+
+      <!-- Status Messages -->
+      <div *ngIf="message()" 
+           [class]="message().startsWith('Success') ? 'alert alert-success mt-3' : 'alert alert-danger mt-3'">
+        {{ message() }}
+      </div>
+    </div>
+
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
