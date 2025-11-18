@@ -7,7 +7,7 @@ from app.services.response_service import response_service
 
 router = APIRouter(tags=["ask_question"])
 
-@router.post("/ask_question") #, response_model=AskResponse
+@router.post("/ask_question",response_model=AskResponse)
 def ask_question(user_question : AskRequest):
     """
     Asks question about processed youtube video

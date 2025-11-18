@@ -1,1 +1,46 @@
-<p>chat works!</p>
+<div class="card shadow-sm mt-4">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Ask Questions</h5>
+  </div>
+  
+  <div class="card-body">
+    <!-- Question Input -->
+    <div class="mb-3">
+      <label class="form-label">Your Question</label>
+      <textarea 
+        class="form-control"
+        [value]="question()" 
+        (input)="question.set($any($event.target).value)"
+        placeholder="Ask anything about the video..."
+        rows="3"
+      ></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex gap-2 mb-3">
+      <button 
+        class="btn btn-success flex-grow-1"
+        (click)="askQuestion()"
+        [disabled]="isAsking() || !question().trim()"
+      >
+        <span *ngIf="isAsking()" class="spinner-border spinner-border-sm me-2"></span>
+        {{ isAsking() ? 'Asking...' : 'Ask Question' }}
+      </button>
+      
+      <button class="btn btn-outline-secondary" (click)="newVideo()">
+        New Video
+      </button>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error()" class="alert alert-danger">
+      {{ error() }}
+    </div>
+
+    <!-- Answer -->
+    <div *ngIf="answer()" class="alert alert-info">
+      <strong>Answer:</strong>
+      <p class="mb-0 mt-2">{{ answer() }}</p>
+    </div>
+  </div>
+</div>

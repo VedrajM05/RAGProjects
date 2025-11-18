@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Api } from '../../services/api';
 import { AskRequest, AskResponse } from '../../models/api-models';
@@ -12,21 +12,21 @@ import { AskRequest, AskResponse } from '../../models/api-models';
   styleUrl: './chat.scss',
 })
 export class Chat {
-  videoId = signal('');
+  videoId = input.required<string>();
   question = signal('');
   answer = signal('');
-  isLoading = signal(false);
+  isAsking = signal(false);
   error = signal('');
 
+  processNewVideo = output<void>() // Emit event when user wants new video
   
+
   constructor(private apiService : Api) {}
 
   askQuestion() : void{
-    this.error.set('');
-    this.answer.set('');
-
-    if(!this.videoId().trim()){
-      this.error.set("Please enter a Video Id");
+    
+    if(!this.question().trim()){
+      this.error.set("Please enter a Question");
       return;
     }
 
@@ -35,7 +35,9 @@ export class Chat {
       return;
     }
 
-    this.isLoading.set(true);
+    this.isAsking.set(true);
+    this.answer.set('');
+    this.error.set('');
 
     const request : AskRequest = {
       video_id : this.videoId().trim(),
@@ -45,15 +47,19 @@ export class Chat {
     this.apiService.askQuestion(request).subscribe({
       next : (response : AskResponse) => {
         this.answer.set(response.answer);
-        this.isLoading.set(false);
+        this.isAsking.set(false);
         console.log('API Response : ', response);
       },
       error : (err) => {
-        this.error.set('Failed to get answer' + err.message);
-        this.isLoading.set(false);
+        this.error.set('Failed to get answer : ' + err.message);
+        this.isAsking.set(false);
         console.log('API Error : ', err);
       }
     })
+  }
+
+  newVideo() : void{
+    this.processNewVideo.emit();
   }
 
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Api } from '../../services/api';
 
@@ -14,12 +14,11 @@ export class VideoProcessor {
   message = signal('');
   error = signal('');
   isLoading = signal(false);
+  videoProcessed = output<string>();
   
   constructor(private apiService : Api) {}
 
   processVideo() : void{
-      
-  
       if(!this.ytURL().trim()){
         console.log(this.ytURL())
         this.message.set("Please enter a valid Youtube URL");
@@ -34,6 +33,7 @@ export class VideoProcessor {
           this.message.set(`Success! Video Id : ${response.video_id} Status : ${response.status}`);
           this.isLoading.set(false);
           console.log('API Response : ', response);
+          this.videoProcessed.emit(response.video_id)
         },
         error : (err) => {
           this.message.set(`Error : ${err.message}`);

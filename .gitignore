@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/youtube-rag-chatbot/backend/app/data/IIvORO248Zs/transcript.json
+/.gitignore

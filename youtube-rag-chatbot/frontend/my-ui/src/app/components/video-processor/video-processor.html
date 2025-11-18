@@ -1,27 +1,3 @@
-<!-- <div class="video-input">
-    <h1>Process Video Input</h1>
-    
-    <input
-        type="text"
-        [value] = "ytURL()"
-        (input) = "ytURL.set($any($event.target).value)"
-        placeholder="Paste Youtube URL here"
-        class="url-input"
-    />
-    <button
-        [disabled] = "isLoading()"
-        (click) = "processVideo()"
-        class="process-btn"
-    >
-    {{isLoading() ? 'Processing' : 'Process Video'}}
-    </button>
-
-    <div class="message">
-        {{message()}}
-    </div>
-
-</div> -->
-
  <!-- Video Processor Card -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
@@ -55,8 +31,6 @@
         {{ message() }}
       </div>
     </div>
-
-    
   </div>
 
 

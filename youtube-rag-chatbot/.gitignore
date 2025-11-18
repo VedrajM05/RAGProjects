@@ -19,3 +19,5 @@ dist/
 *.user
 *.userosscache
 *.sln.docstates
+# transcripts
+data/

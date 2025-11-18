@@ -1,8 +1,18 @@
 <div class="container mt-5">
-    <!-- Header -->
-    <div class="text-center mb-5">
-        <h1 class="display-4 text-primary">YouTube RAG Chatbot</h1>
-        <p class="lead text-muted">Ask questions about any YouTube video</p>
-    </div>
-    <app-video-processor></app-video-processor>
+  <div class="text-center mb-5">
+    <h1 class="display-4 text-primary">YouTube RAG Chatbot</h1>
+    <p class="lead text-muted">Ask questions about any YouTube video</p>
+  </div>
+
+  <!-- Listening to event emitted by child component Video Processor -->
+  <app-video-processor 
+    (videoProcessed)="onVideoProcessed($event)">
+  </app-video-processor>
+
+  <!-- Chat Interface (only show when video processed) -->
+  <app-chat 
+    *ngIf="isVideoProcessed()"
+    [videoId]="currentVideoId()"
+    (processNewVideo)="onNewVideo()">
+  </app-chat>
 </div>
