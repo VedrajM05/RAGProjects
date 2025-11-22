@@ -1,46 +1,75 @@
 <div class="card shadow-sm mt-4">
-  <div class="card-header bg-success text-white">
-    <h5 class="mb-0">Ask Questions</h5>
+  <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">💬 Chat</h5>
+    <button class="btn btn-light btn-sm" (click)="newVideo()">
+      New Video
+    </button>
   </div>
   
   <div class="card-body">
-    <!-- Question Input -->
-    <div class="mb-3">
-      <label class="form-label">Your Question</label>
+    <!-- Answer Section with Chat Messages -->
+    <div #chatContainer class="chat-messages mb-3" style="height: 300px; overflow-y: auto;">
+      
+      <!-- Chat Message Loop -->
+      <div *ngFor="let message of messages()" 
+           [class]="message.type === 'user' ? 'text-end mb-3' : 'text-start mb-3'">
+        
+        <!-- User Message Bubble (Right) -->
+        <div *ngIf="message.type === 'user'" class="d-flex justify-content-end">
+          <div class="bg-primary text-white rounded p-3" style="max-width: 50%;">
+            {{ message.content }}
+          </div>
+        </div>
+
+        <!-- Assistant Message Bubble (Left) -->
+        <div *ngIf="message.type === 'assistant'" class="d-flex justify-content-start">
+          <div class="bg-light border rounded p-3" style="max-width: 50%;">
+            {{ message.content }}
+          </div>
+        </div>
+      </div>
+
+      <!--Loading Message Bubble -->
+      <div *ngIf="isAsking()" class="text-start mb-3">
+        <div class="bg-light border rounded p-3 d-flex align-items-center" style="max-width: 50%;">
+          <div class="spinner-border spinner-border-sm me-2"></div>
+          Generating answer...
+        </div>
+      </div>
+    </div>
+
+    <!--Error Alert -->
+    <div *ngIf="error()" class="alert alert-warning alert-dismissible fade show mb-3">
+      {{ error() }}
+      <button type="button" class="btn-close" (click)="error.set('')"></button>
+    </div>
+
+    <!-- Input Area => single row -->
+    <div class="input-group">
       <textarea 
         class="form-control"
         [value]="question()" 
         (input)="question.set($any($event.target).value)"
-        placeholder="Ask anything about the video..."
-        rows="3"
-      ></textarea>
-    </div>
-
-    <!-- Buttons -->
-    <div class="d-flex gap-2 mb-3">
-      <button 
-        class="btn btn-success flex-grow-1"
-        (click)="askQuestion()"
-        [disabled]="isAsking() || !question().trim()"
+        (keydown.enter)="$event.preventDefault(); askQuestion(); question.set('')"
+        placeholder="Ask a question..."
+        rows="2"
+        [disabled]="isAsking()"
       >
-        <span *ngIf="isAsking()" class="spinner-border spinner-border-sm me-2"></span>
-        {{ isAsking() ? 'Asking...' : 'Ask Question' }}
-      </button>
-      
-      <button class="btn btn-outline-secondary" (click)="newVideo()">
-        New Video
+    </textarea>
+      <button 
+        class="btn btn-success"
+        (click)="askQuestion()"
+        [disabled]="!question().trim() || isAsking()"
+      >
+        <span *ngIf="isAsking()" class="spinner-border spinner-border-sm me-1"></span>
+        Send
       </button>
     </div>
 
-    <!-- Error -->
-    <div *ngIf="error()" class="alert alert-danger">
-      {{ error() }}
-    </div>
-
-    <!-- Answer -->
-    <div *ngIf="answer()" class="alert alert-info">
+    <!-- 🆕 REMOVE Old Answer Section -->
+    <!-- <div *ngIf="answer()" class="alert alert-info">
       <strong>Answer:</strong>
       <p class="mb-0 mt-2">{{ answer() }}</p>
-    </div>
+    </div> -->
   </div>
 </div>
