@@ -34,7 +34,7 @@ class RetrieverService:
             with open(metadata_path, 'r', encoding='utf-8') as f:
                 self.metadata = json.load(f)
 
-            print(f"load_index successful for video id : {video_id}")
+            # print(f"load_index successful for video id : {video_id}")
             return True
         
         except Exception as e:

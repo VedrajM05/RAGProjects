@@ -34,18 +34,18 @@ def create_embeddings(chunks : list[dict]) -> np.ndarray :
     if not chunks : 
         return ValueError("No chunks provided for embedding")
     
-    print("Loading Embedding Model : ",str(EMBEDDING_MODEL))
+    # print("Loading Embedding Model : ",str(EMBEDDING_MODEL))
     model = SentenceTransformer(EMBEDDING_MODEL)
 
     # Extract text from chunks
     texts = [chunk['text'] for chunk in chunks]
 
-    print(f"Creating embeddings for {len(texts)} chunks")
+    # print(f"Creating embeddings for {len(texts)} chunks")
 
     # Create embeddings
     embeddings = model.encode(texts, show_progress_bar=True)
 
-    print(f"Created embeddings with shape : {embeddings.shape}")
+    # print(f"Created embeddings with shape : {embeddings.shape}")
     
     return embeddings
 

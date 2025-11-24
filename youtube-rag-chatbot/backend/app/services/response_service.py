@@ -10,7 +10,7 @@ from langchain_core.messages import HumanMessage
 from transformers import pipeline
 from app.models.query_models import AskResponse
 from app.services.retriever_service import get_retriever
-from app.rag_pipeline_config import LLM_MODEL_NAME1, LLM_MODEL_NAME2, TOP_K
+from app.rag_pipeline_config import LLM_MODEL_NAME1, LLM_MODEL_NAME5, TOP_K
 from dotenv import load_dotenv
 
 class ResponseService():
@@ -81,11 +81,12 @@ class ResponseService():
         if not API_KEY : 
             return f"API_KEY not found in env variables"
         
+        # gpt-3.5-turbo
         # Step 1: Create a pipeline : Hugging Face local/internet-accessible model, using the Transformers pipeline interface
         try:
             llm = ChatOpenAI(
-                model="gpt-3.5-turbo",
-                temperature=0.2,
+                model= LLM_MODEL_NAME5,
+                #temperature=0.2,
                 api_key=API_KEY
             )
             # Invoke model and retreive output 
@@ -111,7 +112,7 @@ class ResponseService():
         if json_output.lower().startswith("answer:"):
             json_output = json_output[len("answer:"):].strip()
 
-        return AskResponse(answer=json_output)
+        return AskResponse(answer=json_output, intent="QA")
 
     def generate_answer(self, video_id: str, query : str)-> dict:
         """

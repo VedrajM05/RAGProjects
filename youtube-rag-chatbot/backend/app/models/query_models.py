@@ -19,3 +19,4 @@ class AskResponse(BaseModel):
     """Response model for question answers with sources"""
     answer : str = Field(...,  description="Generated answer to the question")
     #sources : List[SourceModel] = Field(..., description="Source segments supporting the answer")
+    intent : str
