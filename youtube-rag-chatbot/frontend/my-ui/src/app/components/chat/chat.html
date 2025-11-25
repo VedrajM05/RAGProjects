@@ -1,75 +1,100 @@
-<div class="card shadow-sm mt-4">
-  <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">💬 Chat</h5>
-    <button class="btn btn-light btn-sm" (click)="newVideo()">
-      New Video
+<div class="card shadow-sm h-100 d-flex flex-column chat-container">
+  <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">
+      <i class="bi bi-robot me-2"></i>YouTube AI Assistant
+    </h5>
+    <button class="btn btn-outline-light btn-sm" (click)="newVideo()">
+      <i class="bi bi-plus me-1"></i>New Video
     </button>
   </div>
   
-  <div class="card-body">
-    <!-- Answer Section with Chat Messages -->
-    <div #chatContainer class="chat-messages mb-3" style="height: 300px; overflow-y: auto;">
+  <div class="card-body p-0 d-flex flex-column flex-grow-1">
+    <!-- Chat Messages Area - Takes available space -->
+    <div #chatContainer class="chat-messages flex-grow-1" style="overflow-y: auto; min-height: 0;">
       
+      <!-- Welcome Message -->
+      <div *ngIf="messages().length === 0" class="welcome-message text-center">
+        <div class="welcome-content">
+          <i class="bi bi-robot display-4 text-muted mb-3"></i>
+          <h5 class="text-muted">Ask me anything about this YouTube video</h5>
+          <p class="text-muted">I can summarize, answer questions, and explain concepts from the video content.</p>
+        </div>
+      </div>
+
       <!-- Chat Message Loop -->
       <div *ngFor="let message of messages()" 
-           [class]="message.type === 'user' ? 'text-end mb-3' : 'text-start mb-3'">
+           [class]="message.type === 'user' ? 'message-user' : 'message-assistant'">
         
-        <!-- User Message Bubble (Right) -->
-        <div *ngIf="message.type === 'user'" class="d-flex justify-content-end">
-          <div class="bg-primary text-white rounded p-3" style="max-width: 50%;">
-            {{ message.content }}
+        <!-- User Message -->
+        <div *ngIf="message.type === 'user'" class="message-bubble user-bubble">
+          <div class="message-avatar">
+            <i class="bi bi-person-fill"></i>
+          </div>
+          <div class="message-content">
+            <div class="message-text">{{ message.content }}</div>
+            <div class="message-time">{{ message.timestamp | date:'shortTime' }}</div>
           </div>
         </div>
 
-        <!-- Assistant Message Bubble (Left) -->
-        <div *ngIf="message.type === 'assistant'" class="d-flex justify-content-start">
-          <div class="bg-light border rounded p-3" style="max-width: 50%;">
-            {{ message.content }}
+        <!-- Assistant Message -->
+        <div *ngIf="message.type === 'assistant'" class="message-bubble assistant-bubble">
+          <div class="message-avatar">
+            <i class="bi bi-robot"></i>
+          </div>
+          <div class="message-content">
+            <div class="message-text bullet-points">{{ message.content }}</div>
+            <div class="message-time">{{ message.timestamp | date:'shortTime' }}</div>
           </div>
         </div>
       </div>
 
-      <!--Loading Message Bubble -->
-      <div *ngIf="isAsking()" class="text-start mb-3">
-        <div class="bg-light border rounded p-3 d-flex align-items-center" style="max-width: 50%;">
-          <div class="spinner-border spinner-border-sm me-2"></div>
-          Generating answer...
+      <!-- Loading Message -->
+      <div *ngIf="isAsking()" class="message-assistant">
+        <div class="message-bubble assistant-bubble">
+          <div class="message-avatar">
+            <i class="bi bi-robot"></i>
+          </div>
+          <div class="message-content">
+            <div class="message-text typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!--Error Alert -->
-    <div *ngIf="error()" class="alert alert-warning alert-dismissible fade show mb-3">
+    <!-- Error Alert -->
+    <div *ngIf="error()" class="alert alert-warning alert-dismissible fade show m-3 mb-0">
+      <i class="bi bi-exclamation-triangle me-2"></i>
       {{ error() }}
       <button type="button" class="btn-close" (click)="error.set('')"></button>
     </div>
 
-    <!-- Input Area => single row -->
-    <div class="input-group">
-      <textarea 
-        class="form-control"
-        [value]="question()" 
-        (input)="question.set($any($event.target).value)"
-        (keydown.enter)="$event.preventDefault(); askQuestion(); question.set('')"
-        placeholder="Ask a question..."
-        rows="2"
-        [disabled]="isAsking()"
-      >
-    </textarea>
-      <button 
-        class="btn btn-success"
-        (click)="askQuestion()"
-        [disabled]="!question().trim() || isAsking()"
-      >
-        <span *ngIf="isAsking()" class="spinner-border spinner-border-sm me-1"></span>
-        Send
-      </button>
+    <!-- Input Area - Fixed at bottom -->
+    <div class="chat-input-container p-3 border-top bg-white">
+      <div class="input-group">
+        <textarea 
+          class="form-control chat-textarea"
+          [value]="question()" 
+          (input)="question.set($any($event.target).value)"
+          (keydown.enter)="$event.preventDefault(); askQuestion(); question.set('')"
+          placeholder="Message YouTube AI Assistant..."
+          rows="1"
+          [disabled]="isAsking()"
+        ></textarea>
+        <button 
+          class="btn btn-dark chat-send-btn"
+          (click)="askQuestion()"
+          [disabled]="!question().trim() || isAsking()"
+        >
+          <i class="bi bi-send-fill"></i>
+        </button>
+      </div>
+      <div class="chat-hint text-muted small mt-2 text-center">
+        Press Enter to send • Shift+Enter for new line
+      </div>
     </div>
-
-    <!-- 🆕 REMOVE Old Answer Section -->
-    <!-- <div *ngIf="answer()" class="alert alert-info">
-      <strong>Answer:</strong>
-      <p class="mb-0 mt-2">{{ answer() }}</p>
-    </div> -->
   </div>
 </div>

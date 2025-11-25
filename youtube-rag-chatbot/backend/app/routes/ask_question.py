@@ -5,7 +5,7 @@ from app.utils.file_utils import transcript_exists
 from app.services.rag_service import answer_question
 from app.services.response_service import response_service
 from app.services.intent_service import detect_intent
-from app.routes.summary_service import generate_summary1
+from app.routes.summary_service import generate_summary
 
 
 router = APIRouter(tags=["ask_question"])
@@ -42,6 +42,7 @@ def ask_question(user_question : AskRequest):
             print(f"json response : ",json_response)
         else:
             json_response = handle_qa_intent(user_question.video_id, user_question.question)
+            
 
         # json_response["intent"] = intent
         return AskResponse(
@@ -61,7 +62,7 @@ def handle_summary_intent(video_id : str, question : str) -> dict:
     """Handle summary intent, generate video overview"""
     try:
         print(f"handle_summary_intent")
-        summary = generate_summary1(video_id, question)
+        summary = generate_summary(video_id, question)
         print("summary", summary)
         return{
             "answer" : summary,
@@ -90,4 +91,8 @@ def handle_qa_intent(video_id : str, question : str) -> dict:
     # print(json_response)
     # json_response["intent"] = "QA"
     # print(f"json response : ",json_response)
-    return json_response.answer
+    
+    return{
+            "answer" : json_response.answer,
+            "sources" : []
+        }

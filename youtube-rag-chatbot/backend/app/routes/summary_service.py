@@ -156,7 +156,7 @@ class SummaryService:
 summary_service = SummaryService()
 
 # Convenience function
-def generate_summary1(video_id: str, question: str) -> str:
+def generate_summary(video_id: str, question: str) -> str:
     """Generate summary for a video"""
     print(f"Convenience function : generate_summary1")
     return summary_service.generate_summary(video_id, question)

@@ -1,46 +1,57 @@
- <!-- Video Processor Card -->
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="card-title">Process YouTube Video</h5>
-      
-      <!-- URL Input -->
-      <div class="mb-3">
-        <label class="form-label">YouTube URL</label>
+<!-- Video Processor Card -->
+<div class="card shadow-sm mb-4 video-processor-card">
+  <div class="card-header bg-dark text-white">
+    <h5 class="mb-0">
+      <i class="bi bi-youtube me-2"></i>Process YouTube Video
+    </h5>
+  </div>
+  
+  <div class="card-body">
+    <!-- URL Input -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold">YouTube URL</label>
+      <div class="input-group">
+        <span class="input-group-text bg-light">
+          <i class="bi bi-link-45deg"></i>
+        </span>
         <input 
           type="text" 
-          class="form-control"
+          class="form-control form-control-lg"
           [value]="ytURL()" 
           (input)="ytURL.set($any($event.target).value)"
-          placeholder="Paste YouTube URL here..."
+          placeholder="https://www.youtube.com/watch?v=..."
+          [disabled]="isLoading()"
         />
       </div>
+      <div class="form-text text-muted">
+        Paste any YouTube video URL to analyze its content
+      </div>
+    </div>
 
-      <!-- Process Button -->
-      <button 
-        class="btn btn-primary w-100"
-        (click)="processVideo()"
-        [disabled]="isLoading()"
-      >
-        <span *ngIf="isLoading()" class="spinner-border spinner-border-sm me-2"></span>
-        {{ isLoading() ? 'Processing...' : 'Process Video' }}
-      </button>
+    <!-- Process Button -->
+    <button 
+      class="btn btn-primary w-100 process-btn py-3"
+      (click)="processVideo()"
+      [disabled]="isLoading() || !ytURL()"
+    >
+      <span *ngIf="isLoading()" class="spinner-border spinner-border-sm me-2"></span>
+      <i class="bi bi-play-circle me-2" *ngIf="!isLoading()"></i>
+      {{ isLoading() ? 'Processing Video...' : 'Process Video' }}
+    </button>
 
-      <!-- Status Messages -->
-      <div *ngIf="message()" 
-           [class]="message().startsWith('Success') ? 'alert alert-success mt-3' : 'alert alert-danger mt-3'">
-        {{ message() }}
+    <!-- Status Messages -->
+    <div *ngIf="message()" 
+         class="status-alert mt-3 alert-dismissible fade show"
+         [class]="message().startsWith('Success') ? 'alert-success' : 'alert-warning'">
+      <div class="d-flex align-items-center">
+        <i class="bi" 
+           [class]="message().startsWith('Success') ? 'bi-check-circle-fill me-2' : 'bi-exclamation-triangle-fill me-2'">
+        </i>
+        <div class="flex-grow-1">
+          {{ message() }}
+        </div>
+        <button type="button" class="btn-close" (click)="message.set('')"></button>
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
