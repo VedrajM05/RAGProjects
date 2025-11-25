@@ -5,3 +5,18 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8f9fa;
 }
+
+/* Force full height for chat */
+.right-panel {
+  padding: 0 !important;
+}
+
+.right-panel app-chat {
+  display: block;
+  height: 100vh !important;
+}
+
+.right-panel .card {
+  height: 100% !important;
+  border-radius: 0 !important;
+}

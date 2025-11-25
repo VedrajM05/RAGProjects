@@ -1,18 +1,60 @@
-<div class="container mt-5">
-  <div class="text-center mb-5">
-    <h1 class="display-4 text-primary">YouTube RAG Chatbot</h1>
-    <p class="lead text-muted">Ask questions about any YouTube video</p>
+<div class="container-fluid split-screen-layout h-100">
+  <div class="row h-100 g-0">
+    <!-- Left Panel - Video & Controls -->
+    <div class="col-lg-4 col-xl-3 left-panel">
+      <div class="p-4 h-100 d-flex flex-column">
+        <!-- Header -->
+        <div class="text-center mb-5">
+          <i class="bi bi-youtube display-4 text-primary mb-3"></i>
+          <h2 class="h3 fw-bold text-dark">YouTube AI Assistant</h2>
+          <p class="text-muted">Analyze and chat about YouTube videos</p>
+        </div>
+        
+        <!-- Video Processor -->
+        <div class="flex-grow-1">
+          <app-video-processor 
+            (videoProcessed)="onVideoProcessed($event)">
+          </app-video-processor>
+        </div>
+        
+        <!-- Features -->
+        <div class="mt-4 pt-4 border-top">
+          <h6 class="text-muted mb-3">What you can do:</h6>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge bg-light text-dark border">Summarize</span>
+            <span class="badge bg-light text-dark border">Ask Questions</span>
+            <span class="badge bg-light text-dark border">Get Insights</span>
+            <span class="badge bg-light text-dark border">Explain Concepts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Panel - Chat (FULL HEIGHT) -->
+    <div class="col-lg-8 col-xl-9 right-panel h-100">
+      <!-- Remove any padding/margin from chat container -->
+      <app-chat 
+        *ngIf="isVideoProcessed()"
+        [videoId]="currentVideoId()"
+        (processNewVideo)="onNewVideo()"
+        class="h-100 w-100">
+      </app-chat>
+      
+      <!-- Welcome State -->
+      <div *ngIf="!isVideoProcessed()" class="h-100 d-flex align-items-center justify-content-center welcome-state">
+        <div class="text-center">
+          <div class="welcome-icon mb-4">
+            <i class="bi bi-chat-square-dots display-1 text-muted"></i>
+          </div>
+          <h3 class="text-muted mb-3">Ready to Chat</h3>
+          <p class="text-muted mb-4">Process a YouTube video to start exploring its content with AI</p>
+          <div class="loading-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <!-- Listening to event emitted by child component Video Processor -->
-  <app-video-processor 
-    (videoProcessed)="onVideoProcessed($event)">
-  </app-video-processor>
-
-  <!-- Chat Interface (only show when video processed) -->
-  <app-chat 
-    *ngIf="isVideoProcessed()"
-    [videoId]="currentVideoId()"
-    (processNewVideo)="onNewVideo()">
-  </app-chat>
 </div>

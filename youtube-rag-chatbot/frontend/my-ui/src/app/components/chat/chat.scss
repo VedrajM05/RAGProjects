@@ -1,0 +1,190 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.chat-container {
+  border-radius: 0;
+  height: 100%;
+  
+  .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; // Important for flexbox
+  }
+}
+
+.chat-messages {
+  flex: 1;
+  min-height: 0; // Crucial for scrolling
+  overflow-y: auto;
+  padding: 20px;
+}
+
+// Ensure input area stays visible
+.chat-input-container {
+  flex-shrink: 0; // Prevents input from shrinking
+  background: white;
+  border-top: 1px solid #e5e5e5;
+}
+
+// Rest of your existing styles...
+.welcome-message {
+  padding: 60px 20px;
+  
+  .welcome-content {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+.message-user, .message-assistant {
+  display: flex;
+  margin-bottom: 24px;
+  
+  &.message-user {
+    justify-content: flex-end;
+  }
+  
+  &.message-assistant {
+    justify-content: flex-start;
+  }
+}
+
+.message-bubble {
+  display: flex;
+  max-width: 70%;
+  gap: 12px;
+  
+  &.user-bubble {
+    flex-direction: row-reverse;
+    
+    .message-content {
+      align-items: flex-end;
+    }
+    
+    .message-text {
+      background: #007bff;
+      color: white;
+      border-radius: 18px 18px 4px 18px;
+    }
+  }
+  
+  &.assistant-bubble {
+    .message-text {
+      background: white;
+      color: #333;
+      border: 1px solid #e5e5e5;
+      border-radius: 18px 18px 18px 4px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+  }
+}
+
+.message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  .user-bubble & {
+    background: #007bff;
+    color: white;
+  }
+  
+  .assistant-bubble & {
+    background: #10a37f;
+    color: white;
+  }
+  
+  i {
+    font-size: 14px;
+  }
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.message-text {
+  padding: 12px 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+
+.message-time {
+  font-size: 11px;
+  color: #999;
+  padding: 0 4px;
+}
+
+// Typing indicator and other styles remain the same...
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  
+  span {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: #999;
+    animation: typing 1.4s infinite ease-in-out;
+    
+    &:nth-child(1) { animation-delay: 0s; }
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+  }
+}
+
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+.chat-textarea {
+  border-radius: 20px;
+  padding: 12px 16px;
+  resize: none;
+  border: 1px solid #e5e5e5;
+  
+  &:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+  }
+}
+
+.chat-send-btn {
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  
+  &:disabled {
+    background: #6c757d;
+    border-color: #6c757d;
+  }
+}
+
+.bullet-points {
+  white-space: pre-line;
+  line-height: 1.6;
+  
+  br {
+    display: block;
+    content: "";
+    margin-top: 8px;
+  }
+}

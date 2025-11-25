@@ -17,7 +17,7 @@ VECTOR_STORE_BASE_DIR = Path("./app/vector_store")
 FAISS_INDEX_NAME = "faiss_index"
 
 # Text Chunking Configuration
-CHUNK_SIZE = 100 # No of characters per chunk
+CHUNK_SIZE = 1000 # No of characters per chunk
 CHUNK_OVERLAP = 20 # Overlap between 2 consecutive chunks
 CHUNK_SEPERATOR = "\n" # Seperator for splitting text
 
@@ -30,6 +30,7 @@ LLM_MODEL_NAME1 = "meta-llama/Llama-3.1-8B-Instruct"
 LLM_MODEL_NAME2 = "mistralai/Mistral-7B-Instruct-v0.1"
 LLM_MODEL_NAME3 = "mistralai/Mistral-7B-Instruct-v0.2"
 LLM_MODEL_NAME4 = "meta-llama/Llama-2-13b-chat-hf"
+LLM_MODEL_NAME5 = "o3-mini"
 
 
 def get_faiss_directory(video_id : str) -> Path :
