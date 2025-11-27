@@ -69,7 +69,7 @@ class SummaryService:
         chunk_summaries = []
         
         # Process first 8 chunks max (for efficiency)
-        for i, chunk in enumerate(chunks[:8]):
+        for i, chunk in enumerate(chunks):
             try:
                 summary = self._summarize_chunk(chunk['text'])
                 if summary and summary.strip():

@@ -41,8 +41,8 @@
 
     <!-- Status Messages -->
     <div *ngIf="message()" 
-         class="status-alert mt-3 alert-dismissible fade show"
-         [class]="message().startsWith('Success') ? 'alert-success' : 'alert-warning'">
+         class="status-alert mt-3 alert alert-dismissible fade show"
+         [class]="message().startsWith('Success') ? 'alert-success' : 'alert-error'">
       <div class="d-flex align-items-center">
         <i class="bi" 
            [class]="message().startsWith('Success') ? 'bi-check-circle-fill me-2' : 'bi-exclamation-triangle-fill me-2'">
@@ -50,7 +50,7 @@
         <div class="flex-grow-1">
           {{ message() }}
         </div>
-        <button type="button" class="btn-close" (click)="message.set('')"></button>
+        <button type="button" class="btn-close" (click)="message.set('')" aria-label="Close"></button>
       </div>
     </div>
   </div>
