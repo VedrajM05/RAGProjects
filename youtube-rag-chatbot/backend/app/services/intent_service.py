@@ -3,6 +3,8 @@ Intent detection for RAG routing - SUMMARY vs QA classification
 """
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableLambda
 import os
 from dotenv import load_dotenv
 from app.rag_pipeline_config import LLM_MODEL_NAME5
@@ -10,8 +12,30 @@ from app.rag_pipeline_config import LLM_MODEL_NAME5
 
 class IntentService:
     def __init__(self):
+        print("__init__ called")
         self.llm = None
+        self.chain = None
         self.setup_OpenAI()
+        self.setup_chain()
+
+    def setup_chain(self):
+        print("setup_chain called")
+        if self.llm:
+            self.chain = (
+                RunnableLambda(lambda q :[
+                    SystemMessage(content="Classify the user's question into exactly one of these 2 categories :- Summary or QA"),
+                    HumanMessage(content=q)
+                ])
+                | self.llm | StrOutputParser() | RunnableLambda(lambda r : r.strip().upper())
+            ) 
+    
+    def detect_intent(self, question : str) -> str :
+        """Classify user question as summary or QA question"""    
+        print("detect intent called")
+        intent = self.chain.invoke(question)
+        if intent not in ["SUMMARY" ,"QA"]:
+            raise ValueError(f"Invalid intent : {intent}")
+        return intent
 
     def setup_OpenAI(self):
         """Initialize OpenAI client"""
@@ -31,13 +55,13 @@ class IntentService:
             print(f"API_KEY not initialized, using fallback detection") 
     
 
-    def detect_intent(self, question : str) -> str :
-        """Classify user question as summary or QA question"""    
-        openAI_intent = self.detect_with_OpenAI(question)
-        if openAI_intent:
-            return openAI_intent
+    # def detect_intent(self, question : str) -> str :
+    #     """Classify user question as summary or QA question"""    
+    #     openAI_intent = self.detect_with_OpenAI(question)
+    #     if openAI_intent:
+    #         return openAI_intent
         
-        return self.detect_with_keywords(question)
+    #   return self.detect_with_keywords(question)
     
     def detect_with_OpenAI(self, question : str) -> str :
         """Use OpenAI for intent classification"""
