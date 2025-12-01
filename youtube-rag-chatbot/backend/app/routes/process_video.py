@@ -14,7 +14,7 @@ def process_video(request : ProcessVideoRequest):
             raw_transcript = fetch_transcript_from_video(video_id)
         if raw_transcript:
             final_transcript = get_text_from_raw_transcript(raw_transcript)
-
+        
         if not final_transcript:
             return ProcessVideoResponse(
                 video_id= video_id,

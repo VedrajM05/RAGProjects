@@ -3,6 +3,8 @@ Intent detection for RAG routing - SUMMARY vs QA classification
 """
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.runnables import RunnableLambda
+from langchain_core.output_parsers import StrOutputParser
 import os
 from dotenv import load_dotenv
 from app.rag_pipeline_config import LLM_MODEL_NAME5
