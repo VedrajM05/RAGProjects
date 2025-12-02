@@ -2,9 +2,11 @@ name: CI - Hello
 
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - '**'          # Trigger on ANY branch you push to
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - '**'          # Trigger on ANY PR
 
 jobs:
   hello:
@@ -14,5 +16,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Say hello
-        run: echo "Hello all from GitHub Actions CI!"
+      - name: Say Hello
+        run: echo "Hello from GitHub Actions! Your CI is running successfully."
