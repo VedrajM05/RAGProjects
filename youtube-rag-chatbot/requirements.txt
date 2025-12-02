@@ -42,4 +42,5 @@ tiktoken
 fastapi
 uvicorn
 fastapi-cors
-
+pytest
+pytest-cov

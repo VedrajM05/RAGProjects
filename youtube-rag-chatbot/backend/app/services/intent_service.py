@@ -3,6 +3,8 @@ Intent detection for RAG routing - SUMMARY vs QA classification
 """
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.runnables import RunnableLambda
+from langchain_core.output_parsers import StrOutputParser
 import os
 from dotenv import load_dotenv
 from app.rag_pipeline_config import LLM_MODEL_NAME5
@@ -12,6 +14,26 @@ class IntentService:
     def __init__(self):
         self.llm = None
         self.setup_OpenAI()
+        self.setup_chain()
+
+    def setup_chain(self):
+        print("setup_chain called")
+        if self.llm:
+            self.chain = (
+                RunnableLambda(lambda q :[
+                    SystemMessage(content="Classify the user's question into exactly one of these 2 categories and give only 1 word answer as:- Summary or QA"),
+                    HumanMessage(content=q)
+                ])
+                | self.llm | StrOutputParser() | RunnableLambda(lambda r : r.strip().upper())
+            ) 
+    
+    def detect_intent(self, question : str) -> str :
+        """Classify user question as summary or QA question"""    
+        print("detect intent called")
+        intent = self.chain.invoke(question)
+        if intent not in ["SUMMARY" ,"QA"]:
+            raise ValueError(f"Invalid intent : {intent}")
+        return intent
 
     def setup_OpenAI(self):
         """Initialize OpenAI client"""
