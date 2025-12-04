@@ -1,5 +1,9 @@
+import os
 from backend.app.services.fetch_transcript import fetch_video_id_from_url, extract_video_id_from_playlist, fetch_transcript_from_video, get_text_from_raw_transcript
+import pytest
 
+
+skip_in_ci = os.getenv("GITHUB_ACTIONS") == "true"
 
 class FakeSnippet:
     def __init__(self, text : str):
@@ -63,7 +67,7 @@ def test_extract_video_id_from_playlist_negative():
     # Assert : check results
     assert video_id !=  "2GV_ouHBw30"
 
-
+@pytest.mark.skipif(skip_in_ci,reason= "Skipped in CI, depends on external Youtube API")
 def test_fetch_transcript_from_video_positive():
      # Arrange 
     video_id = "zwUSZD3t_BU"
@@ -75,6 +79,7 @@ def test_fetch_transcript_from_video_positive():
     # Assert : check results
     assert transcript_text != None
 
+@pytest.mark.skipif(skip_in_ci,reason= "Skipped in CI, depends on external Youtube API")
 def test_fetch_transcript_from_video_negative():
      # Arrange 
     video_id = "zwUSZD3t_BU"
