@@ -43,4 +43,29 @@ jobs:
       - name: Run backend tests
         run: |
           pytest --maxfail=1 --disable-warnings -q
-      
+  
+  frontend-tests:
+    name: Frontend(Angular) Tests
+    runs-on: ubuntu-latest
+    defaults: 
+      run:
+        working-directory: frontend/my-ui
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with: 
+          node-version: 18
+
+      - name: Install Dependencies
+        uses: npm ci
+        
+      - name: Run Angular Unit Tests
+        uses: npm tests -- --watch=false --browsers=ChromeHeadless
+
+
+
+
+
