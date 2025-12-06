@@ -10,16 +10,6 @@ on:
       - main
 
 jobs:
-  hello:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Say Hello
-        run: echo "Hello from GitHub Actions! Your CI is running successfully."
-  
   backend-tests:
     name: Backend(FastAPI-Python) Tests
     runs-on: ubuntu-latest
