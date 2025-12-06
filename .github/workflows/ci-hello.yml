@@ -60,10 +60,10 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        uses: npm ci
+        run: npm ci
         
       - name: Run Angular Unit Tests
-        uses: npm tests -- --watch=false --browsers=ChromeHeadless
+        run: npm tests -- --watch=false --browsers=ChromeHeadless
 
 
 
