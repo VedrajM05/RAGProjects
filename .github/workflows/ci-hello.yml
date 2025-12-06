@@ -20,6 +20,7 @@ jobs:
         run: echo "Hello from GitHub Actions! Your CI is running successfully."
   
   backend-tests:
+    name: Backend(FastAPI-Python) Tests
     runs-on: ubuntu-latest
 
     defaults: 
