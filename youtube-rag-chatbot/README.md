@@ -1,29 +1,154 @@
-# YouTube RAG Chatbot
+# 🎬 YouTube RAG Chatbot
+AI-powered Assistant to Analyze and Chat with Any YouTube Video
 
-A Retrieval-Augmented Generation (RAG) chatbot that processes YouTube videos and answers questions about their content.
+This project is an end-to-end Retrieval-Augmented Generation (RAG) system built using FastAPI, Angular, LangChain, OpenAI, FAISS and Docker.
 
-## Backend Setup
+Paste a YouTube URL → System extracts the transcript → Builds vector embeddings → Answers questions → Generates summaries → Detects user intent (summarize / ask / explain / insights).
 
-### Prerequisites
-- Python 3.8+
-- pip (Python package manager)
+🚀 Features
+🔹 Full RAG Pipeline
 
-### Installation & Setup
+Extracts YouTube transcripts
 
-    1. **Navigate to the backend directory**
-    cd backend
+Splits transcript into semantically meaningful chunks
 
-    2. Create and activate virtual environment
-    python -m venv .venv
-    .venv\Scripts\activate
+Generates embeddings using Sentence Transformers
 
-    3. Install dependencies
-    pip install -r requirements.txt
+Stores and retrieves vectors using FAISS
 
-    4. Run the FastAPI server
-    uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+Answers user queries grounded in video content
 
-    5. Access the application
-    API: http://127.0.0.1:8000
-    API Docs: http://127.0.0.1:8000/docs
+🔹 Two AI Engines
 
+QA Engine → Detailed grounded answers
+
+Summarization Engine → 5-point concise summaries
+
+Intent detection automatically routes to the right engine
+
+🔹 Modern Frontend
+
+Angular UI
+
+Clean, responsive Bootstrap styling
+
+Real-time chat-style interface
+
+“Process Video” → “Ask Questions” workflow
+
+🔹 Production-Ready Backend
+
+FastAPI server
+
+Modular service architecture
+
+Clean separation: Transcript → Chunking → Embeddings → Retrieval → LLM → Response formatting
+
+🔹 DevOps & Deployment
+
+Dockerized backend & frontend
+
+Docker Compose multi-service deployment
+
+GitHub Actions CI Pipeline
+
+Backend tests (pytest + TestClient)
+
+Angular unit tests
+
+Lint + build verification
+
+🔹 Testing
+
+Unit tests for FastAPI
+
+Unit tests for Angular
+
+Mocked services for deterministic testing
+
+🛠️ Tech Stack
+Backend
+
+Python 3.x
+
+FastAPI
+
+LangChain
+
+FAISS
+
+OpenAI GPT-4 models
+
+yt_dlp (for transcript extraction)
+
+Frontend
+
+Angular
+
+TypeScript
+
+Bootstrap
+
+RxJS
+
+ML & AI
+
+Sentence Transformer: all-MiniLM-L6-v2
+
+Retrieval-Augmented Generation
+
+Intent Classification Prompt
+
+Summarization Map-Reduce logic
+
+DevOps
+
+Docker
+
+Docker Compose
+
+GitHub Actions (CI)
+
+
+📁 Project Structure
+/frontend
+    /src
+        /app
+            components/
+            services/
+            models/
+    Dockerfile
+
+/backend
+    app/
+        api/
+        services/
+        utils/
+        prompts/
+        models/
+    tests/
+    Dockerfile
+
+docker-compose.yml
+README.md
+
+🚀 Local Development Setup
+1. Clone Repo
+git clone <repo-url>
+cd youtube-rag-chatbot
+
+2. Run Backend + Frontend with Docker Compose
+docker compose up --build
+
+
+Backend → http://localhost:8000
+Frontend → http://localhost:4200
+
+🧪 Running Tests
+Backend
+cd backend
+pytest
+
+Frontend
+cd frontend
+ng test
