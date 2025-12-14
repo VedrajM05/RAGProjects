@@ -76,7 +76,7 @@ An end-to-end **Retrieval-Augmented Generation (RAG)** application that allows u
 ---
 
 ## 🧩 Architecture Overview
-
+```text
 User
  └── Angular UI
        └── FastAPI Backend
@@ -87,13 +87,13 @@ User
              ├── Retrieval Layer
              ├── Intent Detection
              └── LLM Response Engine
-
+```
 
 
 ---
 
 ## 📁 Project Structure
-
+```text
 youtube-rag-chatbot/
 │
 ├── backend/
@@ -113,83 +113,75 @@ youtube-rag-chatbot/
 ├── docker-compose.yml
 ├── .github/workflows/ci.yml
 └── README.md
-
+```
 
 
 ---
 
 ## 🚀 Getting Started (Local)
 
-### 1️⃣ Clone Repository
+1️⃣ Clone Repository
 ```bash
 git clone https://github.com/VedrajM05/RAGProjects.git
 cd youtube-rag-chatbot
-
+```
 2️⃣ Run with Docker Compose
+```bash
 docker compose up --build
-
+```
+```bash
 Frontend: http://localhost:4200
 Backend: http://localhost:8000
 API Docs: http://localhost:8000/docs
+```
 
 🧪 Running Tests
+```text
 Backend
-cd backend
-pytest
+  cd backend
+  pytest
 
 Frontend
 cd frontend/my-ui
 ng test
+```
 
-🔮 Backlog / Future Enhancements
+# 🔮 Backlog / Future Enhancements
 
-(Intentionally deferred to focus on core functionality)
+- (Intentionally deferred to focus on core functionality)
+- Advanced semantic chunking strategies
+- Runnable-based LangChain refactors
+- PromptTemplate standardization
+- Chunk-reference cleanup in responses
+- Full observability (logging, metrics)
+- Kubernetes deployment
+- Advanced analytics & insights engine
 
-Advanced semantic chunking strategies
-
-Runnable-based LangChain refactors
-
-PromptTemplate standardization
-
-Chunk-reference cleanup in responses
-
-Full observability (logging, metrics)
-
-Kubernetes deployment
-
-Advanced analytics & insights engine
-
-👨‍💻 Author
-
+# 👨‍💻 Author
+```text
 Vedraj Mokashi
 .NET & Angular Full-Stack Developer (7+ Years Experience)
 Currently transitioning into AI / Machine Learning & LLM Engineering
+```
 
-📌 Professional Background
+# 📌 Professional Background
 
-7+ years of experience building enterprise-grade web applications
+- 7+ years of experience building enterprise-grade web applications
+- Strong expertise in .NET, ASP.NET, Angular, SQL, REST APIs
+- Proven experience with production systems, scalability, and clean architecture
+- Actively transitioning into AI/ML, RAG systems, and LLM-based applications
 
-Strong expertise in .NET, ASP.NET, Angular, SQL, REST APIs
+# 📌 Current Focus Areas
 
-Proven experience with production systems, scalability, and clean architecture
+- Retrieval-Augmented Generation (RAG)
+- Large Language Models (LLMs)
+- LangChain & LangGraph (Agentic AI)
+- AI-powered backend systems with FastAPI
+- MLOps fundamentals (Docker, CI/CD, deployment)
+- Bridging traditional full-stack engineering with modern AI systems
 
-Actively transitioning into AI/ML, RAG systems, and LLM-based applications
-
-📌 Current Focus Areas
-
-Retrieval-Augmented Generation (RAG)
-
-Large Language Models (LLMs)
-
-LangChain & LangGraph (Agentic AI)
-
-AI-powered backend systems with FastAPI
-
-MLOps fundamentals (Docker, CI/CD, deployment)
-
-Bridging traditional full-stack engineering with modern AI systems
-
-⭐ Support
-
+# ⭐ Support
+```text
 If you found this project useful or insightful, consider starring the repository ⭐
 It helps support future work and open-source contributions.
+```
