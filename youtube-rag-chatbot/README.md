@@ -78,15 +78,16 @@ An end-to-end **Retrieval-Augmented Generation (RAG)** application that allows u
 ## 🧩 Architecture Overview
 
 User
-└── Angular UI
-└── FastAPI Backend
-├── Transcript Service
-├── Chunking Service
-├── Embedding Service
-├── FAISS Vector Store
-├── Retrieval Layer
-├── Intent Detection
-└── LLM Response Engine
+ └── Angular UI
+       └── FastAPI Backend
+             ├── Transcript Service
+             ├── Chunking Service
+             ├── Embedding Service
+             ├── FAISS Vector Store
+             ├── Retrieval Layer
+             ├── Intent Detection
+             └── LLM Response Engine
+
 
 
 ---
@@ -96,22 +97,23 @@ User
 youtube-rag-chatbot/
 │
 ├── backend/
-│ ├── app/
-│ │ ├── api/
-│ │ ├── services/
-│ │ ├── prompts/
-│ │ ├── models/
-│ │ └── utils/
-│ ├── tests/
-│ └── Dockerfile
+│   ├── app/
+│   │   ├── api/
+│   │   ├── services/
+│   │   ├── prompts/
+│   │   ├── models/
+│   │   └── utils/
+│   ├── tests/
+│   └── Dockerfile
 │
 ├── frontend/
-│ ├── src/app/
-│ └── Dockerfile
+│   ├── src/app/
+│   └── Dockerfile
 │
 ├── docker-compose.yml
 ├── .github/workflows/ci.yml
 └── README.md
+
 
 
 ---
